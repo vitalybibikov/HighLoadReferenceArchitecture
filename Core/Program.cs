@@ -1,39 +1,36 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Net.Http;
 using System.Threading.Tasks;
-using ConsoleApp1.Builder.Concrete;
-using ConsoleApp1.Core.Sports.Enums;
-using ConsoleApp1.Sources.Interfaces;
-using ConsoleApp1.Sources.LifeScoresSource;
+using Core.Core.Sports.Enums;
+using Core.NuGet.Contracts;
+using Core.Sources.Implementations.LifeScores;
+using Core.Sources.Implementations.LifeScores.Builder;
 
-namespace ConsoleApp1
+namespace Core
 {
     class Parser
     {
         static async Task Main(string[] args)
         {
-            var client = new HttpClient();
-            TimeSpan r = TimeSpan.Zero;
+            TimeSpan span = TimeSpan.Zero;
             
             for (int i = 0; i <= 99; i++)
             {
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
-                var liveScores = new LiveScoresPathBuilder(new Uri("https://www.livescores.com/"));
-
-                var source = liveScores
-                    .WithSoccer()
-                    .Live()
-                    .Build();
-
-                ISportsSource sportsSource =  new LifeScoresSource(client);
-                var crawler = sportsSource.GetCrawler(SportType.Soccer);
-                var competitions = await crawler.GetAllAsync(source);
+                
+                var pathBuilder = new LiveScoresPathBuilder();
+                var sportsSource = new LifeScoresSource(pathBuilder);
+                
+                var crawler = sportsSource.GetRetriever(new SyncMessage()
+                {
+                    SportType = SportType.Soccer
+                });
+                var competitions = await crawler.GetAllAsync();
 
                 stopWatch.Stop();
-                r = stopWatch.Elapsed;
-                Console.WriteLine(r);
+                span = stopWatch.Elapsed;
+                Console.WriteLine(span);
             }
 
             Console.ReadKey();

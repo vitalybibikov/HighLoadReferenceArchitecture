@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConsoleApp1.Core
+﻿namespace Core.Core
 {
     public class Team
     {

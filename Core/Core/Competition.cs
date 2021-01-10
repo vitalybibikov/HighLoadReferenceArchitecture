@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
-using ConsoleApp1.Core.Sports.Enums;
-using ConsoleApp1.Extensions;
+using Core.Core.Sports.Enums;
+using Core.NuGet.Shared.Extensions;
 
-namespace ConsoleApp1.Core
+namespace Core.Core
 {
     public class Competition
     {

@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1.Core.Sports.Enums
+﻿namespace Core.Core.Sports.Enums
 {
     public enum SportType
     {
