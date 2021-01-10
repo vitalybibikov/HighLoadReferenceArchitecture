@@ -20,7 +20,7 @@ namespace Api.Controllers
         [HttpGet]
         public IEnumerable<Competition> Get()
         {
-            throw new NotImplementedException();
+            return new List<Competition>();
         }
     }
 }

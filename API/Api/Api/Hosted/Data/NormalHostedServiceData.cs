@@ -9,9 +9,9 @@ namespace Api.Hosted.Data
         public NormalHostedServiceData(IOptions<ServiceBusSettings> settings)
             : base(settings)
         {
-            StorageName = settings.Value.ServiceBusLiveCompetitionsTopicName;
+            StorageName = settings.Value.ServiceBusNormalCompetitionsTopicName;
             //todo: move to settings, when those hosted services be in a different projects;
-            SubscriptionName = "Processing";
+            SubscriptionName = "NormalProcessing";
         }
     }
 }

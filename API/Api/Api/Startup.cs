@@ -7,6 +7,7 @@ using Api.Settings;
 using Api.Settings.Extensions;
 using FluentValidation.AspNetCore;
 using HealthChecks.UI.Client;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +36,9 @@ namespace Api
             services.Configure<ServiceBusSettings>(Configuration.GetSection(nameof(ServiceBusSettings)))
                 .AddOptions<ServiceBusSettings>()
                 .ValidateDataAnnotations();
+
+            services.AddMediatR(
+                typeof(NotificationsMessageHandler).Assembly);
 
             AddHostedServices(services);
             AddHealthChecks(services);

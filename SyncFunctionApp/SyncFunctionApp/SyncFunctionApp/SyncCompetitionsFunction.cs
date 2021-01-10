@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Core.NuGets.Contracts;
+using Core.NuGets.Dtos;
 using Core.Sources;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs;
@@ -30,6 +31,7 @@ namespace SyncFunctionApp
             var competitions = await retriever.GetAllAsync();
 
             var tasks = competitions
+                .Select(x=> new CompetitionDto(x))
                 .Select(competition => output.AddAsync(competition.ToBrokeredMessage(competition.UniqueId.ToString())))
                 .ToList();
 

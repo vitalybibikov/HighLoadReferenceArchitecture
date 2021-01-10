@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Core;
 using Core.NuGets.Contracts;
 using Core.Sources;
 using LiveSyncFunctionApp.Extensions;
@@ -37,7 +38,9 @@ namespace LiveSyncFunctionApp
                 var retriever = source.GetRetriever(message);
                 var competition = await retriever.GetOneAsync(message.Uri);
 
-                var result = competition.ToBrokeredMessage(competition.UniqueId.ToString());
+                var result = new CompetitionDto(competition)
+                    .ToBrokeredMessage(competition.UniqueId.ToString());
+
                 await output.AddAsync(result);
 
                 // Orchestration sleeps until this time.

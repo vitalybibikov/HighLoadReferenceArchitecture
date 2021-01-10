@@ -34,8 +34,8 @@ namespace Api.Configuration.Extensions
         {
             hcBuilder.AddAzureServiceBusQueue(
                 serviceBusSettings.ConnectionString,
-                serviceBusSettings.ServiceBusNormalCompetitionsTopicName,
-                serviceBusSettings.ServiceBusNormalCompetitionsTopicName,
+                serviceBusSettings.ServiceBusQueueName,
+                serviceBusSettings.ServiceBusQueueName,
                 tags: new[] { "servicebus" });
 
             return hcBuilder;
@@ -45,8 +45,8 @@ namespace Api.Configuration.Extensions
         {
             hcBuilder.AddAzureServiceBusQueue(
                 serviceBusSettings.ConnectionString,
-                serviceBusSettings.ServiceBusNormalCompetitionsTopicName,
-                serviceBusSettings.ServiceBusNormalCompetitionsTopicName,
+                serviceBusSettings.ServiceBusLiveQueueName,
+                serviceBusSettings.ServiceBusLiveQueueName,
                 tags: new[] { "servicebus" });
 
             return hcBuilder;

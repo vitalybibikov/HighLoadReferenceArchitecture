@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Core;
+using Core.NuGets.Dtos;
 using MediatR;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.InteropExtensions;
@@ -37,9 +37,9 @@ namespace Api.Hosted.Handler
         {
             switch (brokeredMessage.ContentType)
             {
-                case nameof(Competition):
+                case nameof(CompetitionDto):
                     {
-                        var message = brokeredMessage.GetBody<Competition>();
+                        var message = brokeredMessage.GetBody<CompetitionDto>();
 
                         logger.LogInformation(
                             handleMessageTemplate,
