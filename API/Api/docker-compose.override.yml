@@ -1,0 +1,11 @@
+version: '3.7'
+
+x-common-variables: &common-variables
+  'ASPNETCORE_ENVIRONMENT': dev
+  'HOST_HOSTNAME': ${HOSTNAME}
+
+services:
+  api:
+    environment: *common-variables
+    ports:
+      - 6666:80

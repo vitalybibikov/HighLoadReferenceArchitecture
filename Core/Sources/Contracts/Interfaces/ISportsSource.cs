@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Core.Sports.Enums;
-using Core.NuGet.Contracts;
+using Core.NuGets.Contracts;
 using Core.Sources.Contracts.Enums;
 
 namespace Core.Sources.Contracts.Interfaces

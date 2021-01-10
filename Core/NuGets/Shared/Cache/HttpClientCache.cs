@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace Core.NuGet.Shared.Cache
+namespace Core.NuGets.Shared.Cache
 {
     /// <summary>
     /// Optimization for Azure Functions HttpClient, that are shared between instances, improves overall performance x20.

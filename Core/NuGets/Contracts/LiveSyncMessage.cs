@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.NuGet.Contracts
+namespace Core.NuGets.Contracts
 {
     public class LiveSyncMessage : SyncMessage
     {

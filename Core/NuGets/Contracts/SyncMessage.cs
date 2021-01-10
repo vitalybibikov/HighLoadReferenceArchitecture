@@ -2,7 +2,7 @@
 using Core.Core.Sports.Enums;
 using Core.Sources.Contracts.Enums;
 
-namespace Core.NuGet.Contracts
+namespace Core.NuGets.Contracts
 {
     public class SyncMessage
     {

@@ -1,0 +1,26 @@
+{
+    "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+    "settings": {
+        "documentationRules": {
+            "companyName": "vbibikov",
+            "copyrightText": "Copyright (c) {vbibikov}. All Rights Reserved.\r\n.",
+            "xmlHeader": false,
+            "fileNamingConvention": "metadata"
+        },
+        "layoutRules": {
+            "newlineAtEndOfFile": "omit"
+        },
+        "spacingRules": {},
+        "readabilityRules": {},
+        "orderingRules": {
+            "usingDirectivesPlacement": "outsideNamespace",
+            "blankLinesBetweenUsingGroups": "omit"
+        },
+        "indentation": {
+            "indentationSize": 4,
+            "tabSize": 4,
+            "useTabs": false
+        },
+        "maintainabilityRules": {}
+    }
+}

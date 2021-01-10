@@ -1,6 +1,6 @@
 ﻿using System;
 using Core.Core.Sports.Enums;
-using Core.NuGet.Shared.Cache;
+using Core.NuGets.Shared.Cache;
 using Core.Sources.Contracts.Interfaces;
 using Core.Sources.Implementations.Builder.Abstract;
 using Core.Sources.Implementations.LifeScores.Capabilities;

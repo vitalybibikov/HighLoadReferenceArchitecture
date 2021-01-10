@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Core.Core.Sports.Enums;
-using Core.NuGet.Contracts;
+using Core.NuGets.Contracts;
 using Core.Sources.Implementations.LifeScores;
 using Core.Sources.Implementations.LifeScores.Builder;
 

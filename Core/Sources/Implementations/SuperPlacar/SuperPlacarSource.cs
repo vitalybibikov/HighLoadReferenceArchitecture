@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using Core.Core.Sports.Enums;
-using Core.NuGet.Contracts;
+using Core.NuGets.Contracts;
 using Core.Sources.Contracts.Enums;
 using Core.Sources.Contracts.Interfaces;
 

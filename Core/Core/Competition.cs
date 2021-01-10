@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using Core.Core.Sports.Enums;
-using Core.NuGet.Shared.Extensions;
+using Core.NuGets.Shared.Extensions;
 
 namespace Core.Core
 {

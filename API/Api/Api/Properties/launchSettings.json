@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Api": {
+      "commandName": "Project",
+      "commandLineArgs": "--self",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "dev"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}"
+    }
+  }
+}

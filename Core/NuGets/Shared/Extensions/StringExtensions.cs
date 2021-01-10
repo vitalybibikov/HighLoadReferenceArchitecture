@@ -1,4 +1,4 @@
-﻿namespace Core.NuGet.Shared.Extensions
+﻿namespace Core.NuGets.Shared.Extensions
 {
     public static class StringExtensions
     {

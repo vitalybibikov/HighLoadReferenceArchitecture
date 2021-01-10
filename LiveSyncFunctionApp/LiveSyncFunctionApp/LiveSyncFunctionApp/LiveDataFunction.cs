@@ -1,40 +1,44 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.NuGet.Contracts;
+using Core.NuGets.Contracts;
+using Core.Sources;
+using LiveSyncFunctionApp.Extensions;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
+using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Logging;
 
 namespace LiveSyncFunctionApp
 {
     public class LiveDataFunction
     {
-        public LiveDataFunction()
-        {
+        private readonly SourcesFactory factory;
 
+        public LiveDataFunction(SourcesFactory factory)
+        {
+            this.factory = factory;
         }
 
         [FunctionName("ScheduledLiveMonitoring")]
-        public static async Task<string> Run(
-            [OrchestrationTrigger] IDurableOrchestrationContext context)
+        public async Task Run(
+            [OrchestrationTrigger] IDurableOrchestrationContext context,
+            [ServiceBus("%ServiceBusLiveCompetitionsQueueName%", EntityType.Topic, Connection = "ServiceBusConnectionString")] IAsyncCollector<Message> output)
         {
             var message = context.GetInput<LiveSyncMessage>();
-            //string result = await context.CallActivityAsync<string>("SayHello", name);
-
-            int jobId = context.GetInput<int>();
             int pollingInterval = message.PollingIntervalInSec;
             DateTime expiryTime = message.FinishTime;
 
             while (context.CurrentUtcDateTime < expiryTime)
             {
-                var jobStatus = await context.CallActivityAsync<string>("GetJobStatus", jobId);
-                if (jobStatus == "Completed")
-                {
-                    // Perform an action when a condition is met.
-                    await context.CallActivityAsync("SendAlert", machineId);
-                    break;
-                }
+                //todo: if match has ended or was cancelled - skip.
+                var source = factory.GetSource(message.ConnectorType);
+                var retriever = source.GetRetriever(message);
+                var competition = await retriever.GetOneAsync(message.Uri);
+
+                var result = competition.ToBrokeredMessage(competition.UniqueId.ToString());
+                await output.AddAsync(result);
 
                 // Orchestration sleeps until this time.
                 var nextCheck = context.CurrentUtcDateTime.AddSeconds(pollingInterval);

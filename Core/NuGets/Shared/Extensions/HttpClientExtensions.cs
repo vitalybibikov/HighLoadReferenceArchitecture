@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Core.NuGet.Shared.Extensions
+namespace Core.NuGets.Shared.Extensions
 {
     public static class HttpClientExtensions
     {

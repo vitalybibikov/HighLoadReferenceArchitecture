@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Core.NuGet.Contracts;
+using Core.NuGets.Contracts;
 using Core.Sources;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs;
@@ -23,7 +23,7 @@ namespace SyncFunctionApp
         public async Task Run(
             [ServiceBusTrigger("%ServiceBusQueueName%", Connection = "ServiceBusConnectionString")]
             SyncMessage message,
-            [ServiceBus("normal-competitions", EntityType.Topic, Connection = "ServiceBusConnectionString")] IAsyncCollector<Message> output)
+            [ServiceBus("%ServiceBusNormalCompetitionsQueueName%", EntityType.Topic, Connection = "ServiceBusConnectionString")] IAsyncCollector<Message> output)
         {
             var source = factory.GetSource(message.ConnectorType);
             var retriever = source.GetRetriever(message);

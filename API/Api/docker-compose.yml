@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    restart: on-failure
+    labels:
+      - "project=365scorestest"
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+
+networks:
+  default:
+      name: 365scores-network

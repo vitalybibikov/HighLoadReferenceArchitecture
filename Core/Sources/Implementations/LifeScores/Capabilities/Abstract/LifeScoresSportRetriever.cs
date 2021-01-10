@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Core.NuGet.Shared.Extensions;
+using Core.NuGets.Shared.Extensions;
 using Core.Sources.Contracts.Abstract;
 using HtmlAgilityPack;
 
