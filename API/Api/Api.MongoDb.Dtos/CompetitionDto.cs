@@ -26,6 +26,7 @@ namespace Api.MongoDb.Dtos
             StartDate = competition.StartDate;
             Teams = new List<Team>();
             SportType = competition.Type;
+            CompetitionDate = competition.CompetitionDate;
         }
 
         [BsonId]
@@ -37,6 +38,8 @@ namespace Api.MongoDb.Dtos
         public string Place { get; set; }
 
         public DateTime StartDate { get; set; }
+
+        public DateTime CompetitionDate { get; set; }
 
         public SportType SportType { get; set; }
 

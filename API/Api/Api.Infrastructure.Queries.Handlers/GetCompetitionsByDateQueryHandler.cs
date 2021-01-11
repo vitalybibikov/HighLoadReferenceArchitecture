@@ -24,7 +24,7 @@ namespace Api.Infrastructure.Queries.Handlers
             CancellationToken cancellationToken)
         {
             var items =  await Competitions
-                .Find<CompetitionDto>(x => x.StartDate.Date == request.Date.Date)
+                .Find<CompetitionDto>(x => x.CompetitionDate == request.Date)
                 .ToListAsync(cancellationToken);
 
             var results = items

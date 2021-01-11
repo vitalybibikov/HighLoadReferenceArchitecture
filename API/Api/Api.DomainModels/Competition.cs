@@ -32,6 +32,8 @@ namespace Api.DomainModels
 
         public DateTime StartDate { get; }
 
+        public DateTime CompetitionDate => StartDate.Date;
+
         public List<Team> Teams { get; }
 
         public abstract void FinishGame(DateTime endDateTime);
