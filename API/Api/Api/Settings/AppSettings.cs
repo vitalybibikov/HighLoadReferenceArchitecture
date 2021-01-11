@@ -5,6 +5,6 @@ namespace Api.Settings
     public class AppSettings
     {
         [Required] 
-        public string ConnectionString { get; set; } = default!;
+        public string MongoDbConnectionString { get; set; } = default!;
     }
 }

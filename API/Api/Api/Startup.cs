@@ -1,8 +1,13 @@
 ﻿using System;
+using Api.Application.Commands;
+using Api.Application.Commands.Handlers;
+using Api.Application.Queries.Results;
 using Api.Configuration.Extensions;
 using Api.Hosted;
 using Api.Hosted.Data;
 using Api.Hosted.Handler;
+using Api.Infrastructure.Queries.Handlers;
+using Api.Infrastructure.Settings;
 using Api.Settings;
 using Api.Settings.Extensions;
 using FluentValidation.AspNetCore;
@@ -14,6 +19,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Driver;
 
 namespace Api
 {
@@ -38,10 +44,20 @@ namespace Api
                 .ValidateDataAnnotations();
 
             services.AddMediatR(
-                typeof(NotificationsMessageHandler).Assembly);
+                typeof(NotificationsMessageHandler).Assembly,
+                typeof(CreateCompetitionCommandHandler).Assembly,
+                typeof(GetCompetitionsByDateQueryHandler).Assembly);
 
             AddHostedServices(services);
             AddHealthChecks(services);
+
+            services.AddRepositories();
+
+            services.AddOptions<CompetitionsStoreDbSettings>()
+                .Bind(Configuration.GetSection(nameof(CompetitionsStoreDbSettings)))
+                .ValidateDataAnnotations();
+
+            services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetAppSettings().MongoDbConnectionString));
 
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsKubernetesEnricher();

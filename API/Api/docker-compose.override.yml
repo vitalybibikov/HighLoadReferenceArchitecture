@@ -8,4 +8,4 @@ services:
   api:
     environment: *common-variables
     ports:
-      - 6666:80
+      - 5200:80

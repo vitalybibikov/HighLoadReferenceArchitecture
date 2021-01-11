@@ -3,8 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Api.Hosted.Data;
 using Api.Hosted.Handler;
-using Core.NuGets.HostedBase.Abstracts;
 using Microsoft.Azure.ServiceBus;
+using NuGets.NuGets.HostedBase.Abstracts;
 
 namespace Api.Hosted
 {

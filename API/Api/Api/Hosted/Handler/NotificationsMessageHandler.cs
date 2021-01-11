@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.NuGets.Dtos;
+using Api.Application.Commands;
+using Api.Core.Shared.Enums;
 using MediatR;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.InteropExtensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NuGets.NuGets.Dtos;
 
 namespace Api.Hosted.Handler
 {
@@ -37,19 +40,26 @@ namespace Api.Hosted.Handler
         {
             switch (brokeredMessage.ContentType)
             {
-                case nameof(CompetitionDto):
+                case nameof(CompetitionMessage):
                     {
-                        var message = brokeredMessage.GetBody<CompetitionDto>();
+                        var message = brokeredMessage.GetBody<CompetitionMessage>();
 
                         logger.LogInformation(
                             handleMessageTemplate,
                             brokeredMessage.CorrelationId,
                             GetType().Name,
                             message);
-                        await mediator.Publish(null, cancellationToken);
 
-                        //todo: here I stopped.
-                        throw new NotImplementedException();
+                        await mediator.Send(
+                            new CreateCompetitionCommand
+                            {
+                                Name = message.Name,
+                                Place = message.Place,
+                                SportType = (SportType)message.SportType,
+                                StartDate = message.StartDate,
+                                Teams = message.Teams.Select(x => new CreateTeamCommand { Name = x.Name })
+                            }, cancellationToken);
+                        break;
                     }
 
                 default:

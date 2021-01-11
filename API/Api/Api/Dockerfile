@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.12 AS builder
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine3.12 AS base
 WORKDIR /app
 
 RUN echo -e "http://nl.alpinelinux.org/alpine/v3.12/main\nhttp://nl.alpinelinux.org/alpine/v3.12/community\nhttp://nl.alpinelinux.org/alpine/edge/testing" > /etc/apk/repositories
@@ -12,12 +12,12 @@ WORKDIR /src
 COPY . .
 WORKDIR "/src/Api"
 
-FROM build AS publish
-RUN dotnet publish "mitp.Api.csproj" -c Release -o /app
+FROM builder AS publish
+RUN dotnet publish "Api.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
 LABEL project="365scores"
 
-ENTRYPOINT ["dotnet", "mitp.Api.dll"]
+ENTRYPOINT ["dotnet", "Api.dll"]

@@ -1,6 +1,6 @@
 ﻿using Api.Settings;
-using Core.NuGets.HostedBase.Interface;
 using Microsoft.Extensions.Options;
+using NuGets.NuGets.HostedBase.Interface;
 
 namespace Api.Hosted.Data.Abstract
 {
