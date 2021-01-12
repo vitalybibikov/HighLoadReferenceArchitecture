@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Common.Sources.Core.Contracts.Abstract.SportsRetriever" Collapsed="true">
+    <Position X="5.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Sources\Core\Contracts\Abstract\SportsRetriever.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Common.Sources.Core.Competition" Collapsed="true">
+    <Position X="6" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAABAAAAAAAAAAAAAQAAAAAAAAAAEAAAEAAQAA=</HashCode>
+      <FileName>Sources\Core\Competition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Common.Sources.Core.Team" Collapsed="true">
+    <Position X="9" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Core\Team.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Common.Sources.Implementations.Builder.Abstract.PathBuilder" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQBAAAAAAACAAAQAAAAAAAAAgAIAAQAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\Builder\Abstract\PathBuilder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Common.Sources.Implementations.LifeScores.Builder.LiveScoresPathBuilder" Collapsed="true">
+    <Position X="5.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAQAAAAAAACABAAwAAAAAAAAAgAAAQAAAAAABAAA=</HashCode>
+      <FileName>Sources\Implementations\LifeScores\Builder\LiveScoresPathBuilder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Common.Sources.Implementations.LifeScores.Capabilities.Abstract.LifeScoresSportRetriever" Collapsed="true">
+    <Position X="4.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\LifeScores\Capabilities\Abstract\LifeScoresSportRetriever.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Common.Sources.Implementations.LifeScores.Capabilities.LifeScoresBasketballRetriever" Collapsed="true">
+    <Position X="0.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\LifeScores\Capabilities\LifeScoresBasketballRetriever.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Common.Sources.Implementations.LifeScores.Capabilities.LifeScoresHockeyRetriever" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\LifeScores\Capabilities\LifeScoresHockeyRetriever.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Common.Sources.Implementations.LifeScores.Capabilities.LifeScoresSoccerRetriever" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAUAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\LifeScores\Capabilities\LifeScoresSoccerRetriever.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Common.Sources.Implementations.LifeScores.Capabilities.LifeScoresTennisRetriever" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\LifeScores\Capabilities\LifeScoresTennisRetriever.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Common.Sources.Implementations.LifeScores.LifeScoresSource" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAIAAAAAQAACAAAAQA=</HashCode>
+      <FileName>Sources\Implementations\LifeScores\LifeScoresSource.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Common.Sources.Implementations.SuperPlacar.Capabilities.Abstract.SuperPlacarSportRetriever" Collapsed="true">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\SuperPlacar\Capabilities\Abstract\SuperPlacarSportRetriever.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Common.Sources.Implementations.SuperPlacar.Capabilities.SuperPlacarSoccerRetriever" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\SuperPlacar\Capabilities\SuperPlacarSoccerRetriever.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Common.Sources.Implementations.SuperPlacar.SuperPlacarSource" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAQAADAAAAQA=</HashCode>
+      <FileName>Sources\Implementations\SuperPlacar\SuperPlacarSource.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Common.Sources.SourcesFactory" Collapsed="true">
+    <Position X="13.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Sources\SourcesFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Common.Sources.Core.Contracts.Interfaces.ISportsRetriever">
+    <Position X="1.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Core\Contracts\Interfaces\ISportsRetriever.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Common.Sources.Core.Contracts.Interfaces.ISportsSource" Collapsed="true">
+    <Position X="10.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAQAACAAAAQA=</HashCode>
+      <FileName>Sources\Core\Contracts\Interfaces\ISportsSource.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Common.Sources.Implementations.Builder.Abstract.IOnDatePathBuilder" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAABAAA=</HashCode>
+      <FileName>Sources\Implementations\Builder\Abstract\IOnDatePathBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Common.Sources.Implementations.Builder.Abstract.IPathBuilder" Collapsed="true">
+    <Position X="1.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\Builder\Abstract\IPathBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Common.Sources.Implementations.LifeScores.Builder.ILiveScoresPathBuilder" Collapsed="true">
+    <Position X="2.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAACABAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Implementations\LifeScores\Builder\ILiveScoresPathBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

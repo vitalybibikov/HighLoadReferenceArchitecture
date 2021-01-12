@@ -26,6 +26,13 @@ namespace LiveSyncFunctionApp
         [FunctionName("ScheduledLiveMonitoring")]
         public async Task Run([OrchestrationTrigger] IDurableOrchestrationContext context)
         {
+            //todo: when message is received, the function can be scheduled till time T,
+            //e.g. till 3-5 minutes prior to match start, after that it can change it's polling behavior from 
+            // 60 days (e.g. time from the match info is parsed) - simply it waits, without being billed till the moment
+            // to 3 every 2 secs while the match is finished and exits.
+
+            //Multiple sources can be queried from this 1 function, for instance if we've specified them in a message, that scheduled the function.
+
             var message = context.GetInput<LiveSyncMessage>();
             int pollingInterval = message.PollingIntervalInSec;
             DateTime expiryTime = message.FinishTime;
@@ -37,9 +44,11 @@ namespace LiveSyncFunctionApp
                 var retriever = source.GetRetriever(message);
 
                 //todo: currently only all is supported for the demo
-
+                //todo: can support almost unlimited amount of calls to source apis, that can be aggregated in this point.
                 DurableHttpResponse response =
                     await context.CallHttpAsync(System.Net.Http.HttpMethod.Get, message.Uri);
+
+
                 var competitions = await retriever.GetAllByContent(response.Content);
                 var competition = competitions.First();
 
