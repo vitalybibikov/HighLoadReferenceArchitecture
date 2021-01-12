@@ -15,7 +15,7 @@ namespace Common.Sources.Core.Contracts.Abstract
             Client = client;
         }
 
-        public abstract Task<Competition> GetOneAsync(Uri source);
+        public abstract Task<List<Competition>> GetAllByContent(string source);
 
         public abstract Task<List<Competition>> GetAllAsync();
 

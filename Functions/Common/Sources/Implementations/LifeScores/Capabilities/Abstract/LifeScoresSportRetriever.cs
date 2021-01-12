@@ -14,13 +14,23 @@ namespace Common.Sources.Implementations.LifeScores.Capabilities.Abstract
         {
         }
 
-        private protected async Task<HtmlNodeCollection> GetNodes(Uri source)
+        private protected async Task<string> LoadContentAsync(Uri source)
         {
             var response = await Client.SendWithBrowserHeaders(source);
             var pageContents = await response.Content.ReadAsStringAsync();
-            var pageDocument = new HtmlDocument();
-            pageDocument.LoadHtml(pageContents);
+            return pageContents;
+        }
 
+        private protected async Task<HtmlNodeCollection> GetNodes(Uri source)
+        {
+            var pageContents = await LoadContentAsync(source);
+            return GetNodes(pageContents);
+        }
+
+        private protected HtmlNodeCollection GetNodes(string content)
+        {
+            var pageDocument = new HtmlDocument();
+            pageDocument.LoadHtml(content);
             return pageDocument.DocumentNode.SelectNodes("(//div[contains(@data-type,'evt')])");
         }
     }

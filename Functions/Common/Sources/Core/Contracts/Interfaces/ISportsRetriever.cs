@@ -11,7 +11,7 @@ namespace Common.Sources.Core.Contracts.Interfaces
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        Task<Competition> GetOneAsync(Uri source);
+        Task<List<Competition>> GetAllByContent(string source);
 
         /// <summary>
         /// Returns all matches by the url

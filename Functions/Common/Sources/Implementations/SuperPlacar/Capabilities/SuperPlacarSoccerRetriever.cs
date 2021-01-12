@@ -14,7 +14,7 @@ namespace Common.Sources.Implementations.SuperPlacar.Capabilities
         {
         }
 
-        public override async Task<Competition> GetOneAsync(Uri source)
+        public override Task<List<Competition>> GetAllByContent(string source)
         {
             throw new NotImplementedException();
         }

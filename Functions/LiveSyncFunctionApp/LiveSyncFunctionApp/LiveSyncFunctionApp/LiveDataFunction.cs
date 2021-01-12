@@ -24,9 +24,7 @@ namespace LiveSyncFunctionApp
         }
 
         [FunctionName("ScheduledLiveMonitoring")]
-        public async Task Run(
-            [OrchestrationTrigger] IDurableOrchestrationContext context,
-            [ServiceBus("%ServiceBusLiveCompetitionsQueueName%", EntityType.Topic, Connection = "ServiceBusConnectionString")] IAsyncCollector<Message> output)
+        public async Task Run([OrchestrationTrigger] IDurableOrchestrationContext context)
         {
             var message = context.GetInput<LiveSyncMessage>();
             int pollingInterval = message.PollingIntervalInSec;
@@ -37,20 +35,25 @@ namespace LiveSyncFunctionApp
                 //todo: if match has ended or was cancelled - skip.
                 var source = factory.GetSource(message.ConnectorType);
                 var retriever = source.GetRetriever(message);
-                var competition = await retriever.GetOneAsync(message.Uri);
+
+                //todo: currently only all is supported for the demo
+
+                DurableHttpResponse response =
+                    await context.CallHttpAsync(System.Net.Http.HttpMethod.Get, message.Uri);
+                var competitions = await retriever.GetAllByContent(response.Content);
+                var competition = competitions.First();
 
                 var result = new CompetitionMessage
-                    {
-                        Name = competition.Name,
-                        Place = competition.Place,
-                        SportType = competition.SportType,
-                        StartDate = competition.StartDate,
-                        Teams = competition.Teams.Select(m => new TeamMessage() { Name = m.Name }).ToList(),
-                        UniqueId = competition.UniqueId
-                    }
-                    .ToBrokeredMessage(competition.UniqueId.ToString());
+                {
+                    Name = competition.Name,
+                    Place = competition.Place,
+                    SportType = competition.SportType,
+                    StartDate = competition.StartDate,
+                    Teams = competition.Teams.Select(m => new TeamMessage { Name = m.Name }).ToList(),
+                    UniqueId = competition.UniqueId
+                };
 
-                await output.AddAsync(result);
+                await context.CallActivityAsync("LiveDataFunctionResultServiceBus", result);
 
                 // Orchestration sleeps until this time.
                 var nextCheck = context.CurrentUtcDateTime.AddSeconds(pollingInterval);
@@ -68,5 +71,16 @@ namespace LiveSyncFunctionApp
             log.LogInformation($"{nameof(LiveDataFunction)} was triggered.");
         }
 
+        [FunctionName("LiveDataFunctionResultServiceBus")]
+        public async Task LiveDataFunctionResultServiceBus(
+            [ActivityTrigger] IDurableActivityContext context,
+            [ServiceBus("%ServiceBusLiveCompetitionsQueueName%", EntityType.Topic, Connection = "ServiceBusConnectionString")] IAsyncCollector<Message> output,
+            ILogger log)
+        {
+            var message = context.GetInput<CompetitionMessage>();
+            var result = message.ToBrokeredMessage(message.UniqueId.ToString());
+            log.LogInformation($"{nameof(LiveDataFunctionResultServiceBus)} was triggered.");
+            await output.AddAsync(result);
+        }
     }
 }

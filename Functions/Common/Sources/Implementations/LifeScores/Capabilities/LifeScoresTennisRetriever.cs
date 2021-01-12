@@ -14,7 +14,7 @@ namespace Common.Sources.Implementations.LifeScores.Capabilities
         {
         }
 
-        public override Task<Competition> GetOneAsync(Uri source)
+        public override Task<List<Competition>> GetAllByContent(string source)
         {
             throw new NotImplementedException();
         }
