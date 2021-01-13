@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Api.Application.Queries.Competitions;
 using Api.Application.Queries.Results;
@@ -28,7 +27,7 @@ namespace Api.Controllers
         {
             var results = await mediator.Send(new GetCompetitionsByDateQuery
             {
-                Date = date //DateTime.Parse(date, Thread.CurrentThread.CurrentCulture)
+                Date = date
             });
 
             return results.Competitions;

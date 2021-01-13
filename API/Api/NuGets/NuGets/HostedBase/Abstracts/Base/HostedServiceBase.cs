@@ -33,6 +33,7 @@ namespace NuGets.NuGets.HostedBase.Abstracts.Base
         {
             executingTask?.Dispose();
             cts?.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         protected abstract Task ExecuteAsync(CancellationToken cancellationToken);

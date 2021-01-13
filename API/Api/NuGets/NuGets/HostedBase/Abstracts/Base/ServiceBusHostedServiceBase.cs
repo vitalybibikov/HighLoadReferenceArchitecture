@@ -21,6 +21,7 @@ namespace NuGets.NuGets.HostedBase.Abstracts.Base
         public override void Dispose()
         {
             base.Dispose();
+            //todo: Should be IAsyncDisposable used as well
             Client?.Value?.CloseAsync().GetAwaiter();
         }
 
