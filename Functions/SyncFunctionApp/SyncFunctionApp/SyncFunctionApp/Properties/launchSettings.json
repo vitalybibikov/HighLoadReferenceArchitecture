@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SyncFunctionApp": {
+      "commandName": "Project",
+      "commandLineArgs": "start --port 7072 --pause-on-error"
+    }
+  }
+}

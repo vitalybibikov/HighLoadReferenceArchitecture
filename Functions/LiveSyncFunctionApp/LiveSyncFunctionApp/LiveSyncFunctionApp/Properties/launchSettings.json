@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LiveSyncFunctionApp": {
+      "commandName": "Project",
+      "commandLineArgs": "start --port 7073 --pause-on-error"
+    }
+  }
+}
