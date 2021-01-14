@@ -7,13 +7,6 @@ namespace Common.Sources.Core.Contracts.Interfaces
     public interface ISportsRetriever
     {
         /// <summary>
-        /// Returns exactly one Competition by the url provided
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        Task<List<Competition>> GetAllByContent(string source);
-
-        /// <summary>
         /// Returns all matches by the url
         /// </summary>
         /// <param name="source"></param>
@@ -21,10 +14,10 @@ namespace Common.Sources.Core.Contracts.Interfaces
         Task<List<Competition>> GetAllAsync();
 
         /// <summary>
-        /// Returns only live matches by visiting a specified page or parsing all the matches.
+        /// Returns only live match
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        Task<List<Competition>> GetLiveAsync();
+        Task<Competition> GetLiveAsync(string content);
     }
 }

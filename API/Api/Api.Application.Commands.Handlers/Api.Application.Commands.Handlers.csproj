@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Api.Application.Notifications\Api.Application.Notifications.csproj" />
     <ProjectReference Include="..\Api.Application.Commands\Api.Application.Commands.csproj" />
     <ProjectReference Include="..\Api.Core.Shared\Api.Core.Shared.csproj" />
     <ProjectReference Include="..\Api.DomainModels\Api.DomainModels.csproj" />

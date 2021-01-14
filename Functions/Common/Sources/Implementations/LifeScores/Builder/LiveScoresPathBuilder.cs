@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using Common.Sources.Core.Contracts.Interfaces;
 using Common.Sources.Implementations.Builder.Abstract;
 using Common.Sources.Implementations.LifeScores.Capabilities;
@@ -80,7 +81,9 @@ namespace Common.Sources.Implementations.LifeScores.Builder
 
         public override ISportsRetriever Build()
         {
-            var client = HttpClientCache.GetOrCreateClient(GetUri());
+            //might be rewritten to be shared later to reuse opened handler's connection.
+            var client = new HttpClient();
+            client.BaseAddress = GetUri();
 
             return Type switch
             {
@@ -88,6 +91,7 @@ namespace Common.Sources.Implementations.LifeScores.Builder
                 SportType.Basketball => new LifeScoresBasketballRetriever(client),
                 SportType.Tennis => new LifeScoresTennisRetriever(client),
                 SportType.Hockey => new LifeScoresHockeyRetriever(client),
+
                 _ => throw new NotSupportedException(nameof(Type))
             };
         }

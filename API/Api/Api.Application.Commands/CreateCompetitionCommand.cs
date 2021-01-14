@@ -19,5 +19,7 @@ namespace Api.Application.Commands
         public IEnumerable<CreateTeamCommand> Teams { get; set; } = new List<CreateTeamCommand>();
 
         public long UniqueId { get; set; }
+
+        public Uri LiveUri { get; set; }
     }
 }

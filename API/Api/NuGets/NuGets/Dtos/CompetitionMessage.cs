@@ -21,5 +21,7 @@ namespace NuGets.NuGets.Dtos
         public List<TeamMessage> Teams { get; set; } = new List<TeamMessage>();
 
         public long UniqueId { get; set; }
+
+        public Uri LiveUri { get; set; }
     }
 }

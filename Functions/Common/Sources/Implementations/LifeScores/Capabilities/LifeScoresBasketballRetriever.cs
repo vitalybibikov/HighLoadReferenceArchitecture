@@ -14,17 +14,12 @@ namespace Common.Sources.Implementations.LifeScores.Capabilities
         {
         }
 
-        public override Task<List<Competition>> GetAllByContent(string source)
-        {
-            throw new NotImplementedException();
-        }
-
         public override Task<List<Competition>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public override Task<List<Competition>> GetLiveAsync()
+        public override async Task<Competition> GetLiveAsync(string content)
         {
             throw new NotImplementedException();
         }

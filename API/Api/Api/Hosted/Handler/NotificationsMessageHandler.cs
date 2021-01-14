@@ -29,11 +29,7 @@ namespace Api.Hosted.Handler
         {
             using var scope = serviceProvider.CreateScope();
             var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-
-            if (brokeredMessage != null)
-            {
-                await Handle(mediator, brokeredMessage, cancellationToken);
-            }
+            await Handle(mediator, brokeredMessage, cancellationToken);
         }
 
         private async Task Handle(IMediator mediator, Message brokeredMessage, CancellationToken cancellationToken)
@@ -58,8 +54,11 @@ namespace Api.Hosted.Handler
                                 SportType = (SportType)message.SportType,
                                 StartDate = message.StartDate,
                                 Teams = message.Teams.Select(x => new CreateTeamCommand { Name = x.Name }),
-                                UniqueId = message.UniqueId
-                            }, cancellationToken);
+                                UniqueId = message.UniqueId,
+                                LiveUri = message.LiveUri
+                            }, 
+                            cancellationToken);
+
                         break;
                     }
 

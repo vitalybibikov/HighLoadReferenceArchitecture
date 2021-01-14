@@ -10,16 +10,19 @@ namespace Common.Sources.Core
 {
     public class Competition
     {
-        public Competition(string name, string place, IEnumerable<Team> teams, DateTime startDate, SportType type)
+        public Competition(string name, string place, IEnumerable<Team> teams, DateTime startDate, SportType type, Uri liveUri)
         {
             Name = name;
             Place = place;
             StartDate = startDate;
             SportType = type;
+            LiveUri = liveUri;
             Teams = teams.ToImmutableArray();
         }
 
         public string Name { get; }
+
+        public Uri LiveUri { get; }
 
         public string Place { get; }
 

@@ -14,15 +14,12 @@ namespace Common.Sources.Implementations.LifeScores.Capabilities
 {
     public sealed class LifeScoresSoccerRetriever : LifeScoresSportRetriever
     {
-        public LifeScoresSoccerRetriever(HttpClient client) 
+        private readonly HttpClient client;
+
+        public LifeScoresSoccerRetriever(HttpClient client)
             : base(client)
         {
-        }
-
-        public override async Task<List<Competition>> GetAllByContent(string source)
-        {
-            var nodes = GetNodes(source);
-            return nodes.Select(ParseNode).ToList();
+            this.client = client;
         }
 
         public override async Task<List<Competition>> GetAllAsync()
@@ -39,12 +36,10 @@ namespace Common.Sources.Implementations.LifeScores.Capabilities
             var team1Name = node.SelectSingleNode("div[contains(@class,'ply tright name')]").InnerText.Trim();
             var team2Name = node.SelectSingleNode("div[contains(@class,'ply name')]").InnerText.Trim();
 
-            var linkParts = node
-                .SelectSingleNode("div[contains(@class,'sco')]//a")
-                ?.Attributes["href"]
-                ?.Value
-                ?.Trim('/')
-                ?.Split('/');
+            var link = node.SelectSingleNode("div[contains(@class,'sco')]//a")?.Attributes["href"]?.Value;
+            
+            var linkParts = link?.Trim('/')
+                .Split('/');
 
             var team1 = new Team(team1Name);
             var team2 = new Team(team2Name);
@@ -54,21 +49,22 @@ namespace Common.Sources.Implementations.LifeScores.Capabilities
                 var place = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(linkParts[1]).Trim();
                 var competitionName = linkParts[2].Replace('-', ' ');
                 competitionName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(competitionName).Trim();
+                var matchUri = new Uri(client.BaseAddress, new Uri(link, UriKind.Relative));
 
-                competition = new Competition(competitionName, place, new[] {team1, team2}, dateTime, SportType.Soccer);
+                competition = new Competition(competitionName, place, new[] { team1, team2 }, dateTime, SportType.Soccer, matchUri);
             }
             else
             {
-                competition = new Competition(String.Empty, String.Empty, new[] { team1, team2 }, dateTime, SportType.Soccer);
+                //todo: currently, let it be so.
+                competition = new Competition(String.Empty, String.Empty, new[] { team1, team2 }, dateTime, SportType.Soccer, null);
             }
 
             return competition;
         }
 
-        public override async Task<List<Competition>> GetLiveAsync()
+        public override async Task<Competition> GetLiveAsync(string content)
         {
             throw new NotImplementedException();
         }
-
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Net.Http;
 
 namespace NuGets.NuGets.Cache
@@ -9,7 +9,7 @@ namespace NuGets.NuGets.Cache
     /// </summary>
     public static class HttpClientCache
     {
-        public static readonly  Dictionary<Uri, HttpClient> clients = new Dictionary<Uri, HttpClient>();
+        public static readonly ConcurrentDictionary<Uri, HttpClient> clients = new ConcurrentDictionary<Uri, HttpClient>();
 
         public static HttpClient GetOrCreateClient(Uri uri)
         {
@@ -20,8 +20,8 @@ namespace NuGets.NuGets.Cache
             }
             else
             {
-                client = new HttpClient {BaseAddress = uri};
-                clients.Add(uri,client);
+                client = new HttpClient { BaseAddress = uri };
+                clients.TryAdd(uri, client);
             }
 
             return client;

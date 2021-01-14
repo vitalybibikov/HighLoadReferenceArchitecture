@@ -120,6 +120,7 @@ namespace Api
             });
 
             services.AddTransient<INotificationsMessageHandler, NotificationsMessageHandler>();
+
             services.AddSingleton<LiveHostedServiceData>();
             services.AddSingleton<NormalHostedServiceData>();
 

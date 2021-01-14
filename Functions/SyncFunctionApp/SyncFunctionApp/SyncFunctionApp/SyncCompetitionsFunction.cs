@@ -38,8 +38,9 @@ namespace SyncFunctionApp
                     Place = x.Place,
                     SportType = x.SportType,
                     StartDate = x.StartDate,
-                    Teams = x.Teams.Select(m => new TeamMessage() { Name = m.Name }).ToList(),
-                    UniqueId = x.UniqueId
+                    Teams = x.Teams.Select(m => new TeamMessage { Name = m.Name }).ToList(),
+                    UniqueId = x.UniqueId,
+                    LiveUri = x.LiveUri
                 })
                 .Select(competition => output.AddAsync(competition.ToBrokeredMessage(competition.UniqueId.ToString())))
                 .ToList();

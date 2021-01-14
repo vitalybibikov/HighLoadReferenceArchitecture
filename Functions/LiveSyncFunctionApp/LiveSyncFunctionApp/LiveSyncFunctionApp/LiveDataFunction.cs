@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Sources;
+using Common.Sources.Core;
+using Dynamitey.DynamicObjects;
 using LiveSyncFunctionApp.Extensions;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs;
@@ -11,6 +14,7 @@ using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Logging;
 using NuGets.NuGets.Contracts;
 using NuGets.NuGets.Dtos;
+using NuGets.NuGets.Dtos.Enums;
 
 namespace LiveSyncFunctionApp
 {
@@ -35,7 +39,9 @@ namespace LiveSyncFunctionApp
 
             var message = context.GetInput<LiveSyncMessage>();
             int pollingInterval = message.PollingIntervalInSec;
-            DateTime expiryTime = message.FinishTime;
+
+            //to make the demo work;
+            DateTime expiryTime = message.FinishTime; 
 
             while (context.CurrentUtcDateTime < expiryTime)
             {
@@ -46,11 +52,25 @@ namespace LiveSyncFunctionApp
                 //todo: currently only all is supported for the demo
                 //todo: can support almost unlimited amount of calls to source apis, that can be aggregated in this point.
                 DurableHttpResponse response =
-                    await context.CallHttpAsync(System.Net.Http.HttpMethod.Get, message.Uri);
+                    await context.CallHttpAsync(
+                        System.Net.Http.HttpMethod.Get,
+                        new Uri("https://www.livescores.com/soccer/holland/eredivisie/fc-twente-vs-ajax/247557/")); //message.Uri
 
+                //currently not implemented, thus will fail
+                //var competition = await retriever.GetLiveAsync(response.Content);
 
-                var competitions = await retriever.GetAllByContent(response.Content);
-                var competition = competitions.First();
+                var competition = new Competition(
+                    "Test",
+                    "Test",
+                    new List<Team>()
+                {
+                    new Team("Test1"),
+                    new Team("Test2")
+                },
+                    DateTime.Now,
+                    SportType.Soccer,
+                    message.Uri);
+
 
                 var result = new CompetitionMessage
                 {
@@ -61,6 +81,7 @@ namespace LiveSyncFunctionApp
                     Teams = competition.Teams.Select(m => new TeamMessage { Name = m.Name }).ToList(),
                     UniqueId = competition.UniqueId
                 };
+
 
                 await context.CallActivityAsync("LiveDataFunctionResultServiceBus", result);
 
@@ -76,14 +97,29 @@ namespace LiveSyncFunctionApp
             [DurableClient] IDurableOrchestrationClient client,
             ILogger log)
         {
-            await client.StartNewAsync("ScheduledLiveMonitoring", message);
-            log.LogInformation($"{nameof(LiveDataFunction)} was triggered.");
+            //uri is pretty unique, but UniqueId might be used here as well;
+            if (message.Uri != null)
+            {
+                var instanceId = message.Uri.ToBase64OrNull();
+
+                var existingInstance = await client.GetStatusAsync(instanceId);
+
+                if (existingInstance == null
+                    || existingInstance.RuntimeStatus == OrchestrationRuntimeStatus.Completed
+                    || existingInstance.RuntimeStatus == OrchestrationRuntimeStatus.Failed
+                    || existingInstance.RuntimeStatus == OrchestrationRuntimeStatus.Terminated)
+                {
+                    log.LogInformation($"{nameof(LiveDataFunction)} was triggered.");
+                    await client.StartNewAsync("ScheduledLiveMonitoring", instanceId, message);
+                }
+            }
         }
 
         [FunctionName("LiveDataFunctionResultServiceBus")]
         public async Task LiveDataFunctionResultServiceBus(
             [ActivityTrigger] IDurableActivityContext context,
-            [ServiceBus("%ServiceBusLiveCompetitionsQueueName%", EntityType.Topic, Connection = "ServiceBusConnectionString")] IAsyncCollector<Message> output,
+            [ServiceBus("%ServiceBusLiveCompetitionsQueueName%", EntityType.Topic, Connection = "ServiceBusConnectionString")]
+            IAsyncCollector<Message> output,
             ILogger log)
         {
             var message = context.GetInput<CompetitionMessage>();

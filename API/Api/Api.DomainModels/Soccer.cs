@@ -8,8 +8,8 @@ namespace Api.DomainModels
 {
     public class Soccer: Competition
     {
-        public Soccer(string name, string place, ICollection<Team> teams, DateTime startDate, string uniqueId) 
-            : base(name, place, teams, startDate, SportType.Soccer, uniqueId)
+        public Soccer(string name, string place, ICollection<Team> teams, DateTime startDate, string uniqueId, Uri liveUri) 
+            : base(name, place, teams, startDate, SportType.Soccer, uniqueId, liveUri)
         {
             if (teams == null || teams.Count != 2)
             {

@@ -16,8 +16,10 @@ namespace LiveSyncFunctionApp.Extensions
             var binaryDictionaryWriter = XmlDictionaryWriter.CreateBinaryWriter(memoryStream);
             ser.WriteObject(binaryDictionaryWriter, data);
             binaryDictionaryWriter.Flush();
-            var message = new Message(memoryStream.ToArray());
-            message.ContentType = data.GetType().Name;
+            var message = new Message(memoryStream.ToArray())
+            {
+                ContentType = data.GetType().Name
+            };
 
             if (!String.IsNullOrEmpty(uniqueId))
             {

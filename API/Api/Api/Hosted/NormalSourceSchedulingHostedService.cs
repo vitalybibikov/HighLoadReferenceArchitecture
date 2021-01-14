@@ -29,7 +29,8 @@ namespace Api.Hosted
             var sources = await mediator.Send(new GetSourcesQuery(), cancellationToken);
 
             //todo: Extension logic should be here, like for every source, which supports X sports, we should have a scheduled call to it's source.
-            // also we don't care about duplicates, as the volumes are low, while ServiceBus can natively de-dupe them, so we get the agility for free.
+            // also we don't care about duplication in hosted services, as the volumes are low,
+            // while ServiceBus can natively de-dupe them, so we get the agility for free.
             foreach (var source in sources.Sources)
             {
                 await mediator.Publish(
@@ -37,8 +38,7 @@ namespace Api.Hosted
                     {
                         ConnectorType = source.ConnectorType,
                         SourceType = source.SourceType,
-                        Uri = source.Uri,
-                        When = DateTime.Now,
+                        When = DateTime.Now.AddDays(3),
                         SportType = SportType.Soccer
                     }, 
                     cancellationToken);

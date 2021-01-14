@@ -7,7 +7,7 @@ namespace Api.DomainModels
 {
     public abstract class Competition
     {
-        protected Competition(string name, string place, ICollection<Team> teams, DateTime startDate, SportType type, string uniqueId)
+        protected Competition(string name, string place, ICollection<Team> teams, DateTime startDate, SportType type, string uniqueId, Uri liveUri)
         {
             UniqueId = uniqueId;
             Name = name;
@@ -15,6 +15,7 @@ namespace Api.DomainModels
             StartDate = startDate;
             Teams = teams.ToList();
             Type = type;
+            LiveUri = liveUri;
         }
 
         public string Name { get; }
@@ -30,6 +31,8 @@ namespace Api.DomainModels
         public DateTime CompetitionDate => StartDate.Date;
 
         public List<Team> Teams { get; }
+
+        public Uri LiveUri { get; set; }
 
         public abstract void FinishGame(DateTime endDateTime);
     }
