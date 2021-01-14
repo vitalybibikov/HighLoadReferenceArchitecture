@@ -2,21 +2,18 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace NuGets.NuGets.HostedBase.Abstracts
 {
     public abstract class TimerHostedServiceBase : IHostedService, IDisposable
     {
         private readonly TimeSpan timeSpan;
-        private readonly ILogger logger;
         private Timer timer = default!;
         private CancellationTokenSource? cts;
 
-        protected TimerHostedServiceBase(TimeSpan timeSpan, ILogger logger)
+        protected TimerHostedServiceBase(TimeSpan timeSpan)
         {
             this.timeSpan = timeSpan;
-            this.logger = logger;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

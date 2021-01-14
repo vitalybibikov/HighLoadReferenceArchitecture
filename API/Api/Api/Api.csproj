@@ -48,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Api.Infrastructure.Notification.Handlers\Api.Infrastructure.Notification.Handlers.csproj" />
     <ProjectReference Include="..\Api.Application.Commands.Handlers\Api.Application.Commands.Handlers.csproj" />
     <ProjectReference Include="..\Api.Application.Commands\Api.Application.Commands.csproj" />
     <ProjectReference Include="..\Api.Application.Queries\Api.Application.Queries.csproj" />

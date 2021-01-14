@@ -57,7 +57,8 @@ namespace Api.Hosted.Handler
                                 Place = message.Place,
                                 SportType = (SportType)message.SportType,
                                 StartDate = message.StartDate,
-                                Teams = message.Teams.Select(x => new CreateTeamCommand { Name = x.Name })
+                                Teams = message.Teams.Select(x => new CreateTeamCommand { Name = x.Name }),
+                                UniqueId = message.UniqueId
                             }, cancellationToken);
                         break;
                     }

@@ -7,22 +7,15 @@ namespace Api.DomainModels
 {
     public abstract class Competition
     {
-        protected Competition(string name, string place, ICollection<Team> teams, DateTime startDate, SportType type)
+        protected Competition(string name, string place, ICollection<Team> teams, DateTime startDate, SportType type, string uniqueId)
         {
+            UniqueId = uniqueId;
             Name = name;
             Place = place;
             StartDate = startDate;
             Teams = teams.ToList();
             Type = type;
         }
-
-        protected Competition(string id, string name, string place, ICollection<Team> teams, DateTime startDate, SportType type)
-            :this(name, place, teams, startDate, type)
-        {
-            Id = id;
-        }
-
-        public string? Id { get; }
 
         public string Name { get; }
 
@@ -31,6 +24,8 @@ namespace Api.DomainModels
         public SportType Type { get; }
 
         public DateTime StartDate { get; }
+
+        public string UniqueId { get; }
 
         public DateTime CompetitionDate => StartDate.Date;
 

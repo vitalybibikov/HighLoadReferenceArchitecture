@@ -1,13 +1,13 @@
 ﻿using System;
-using Api.Application.Commands;
 using Api.Application.Commands.Handlers;
-using Api.Application.Queries.Results;
 using Api.Configuration.Extensions;
 using Api.Hosted;
 using Api.Hosted.Data;
 using Api.Hosted.Handler;
+using Api.Infrastructure.Notification.Handlers;
 using Api.Infrastructure.Queries.Handlers;
 using Api.Infrastructure.Settings;
+using Api.Infrastructure.Settings.ServiceBus;
 using Api.Settings;
 using Api.Settings.Extensions;
 using FluentValidation.AspNetCore;
@@ -16,6 +16,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -45,6 +46,7 @@ namespace Api
 
             services.AddMediatR(
                 typeof(NotificationsMessageHandler).Assembly,
+                typeof(SendNormalSourceNotificationHandler).Assembly,
                 typeof(CreateCompetitionCommandHandler).Assembly,
                 typeof(GetCompetitionsByDateQueryHandler).Assembly);
 
@@ -124,6 +126,14 @@ namespace Api
             //todo: this 2 hosted services and an api should belong to different applications, as normal and live data flow differ in > 10000 times.
             services.AddHostedService<LiveCompetitionHostedService>();
             services.AddHostedService<NormalCompetitionHostedService>();
+
+            services.AddHostedService<NormalSourceSchedulingHostedService>();
+
+            services.AddSingleton<INormalCoordinationQueueClient>(x => 
+                new NormalCoordinationQueueClient(new QueueClient(serviceBusSettings.ConnectionString, serviceBusSettings.ServiceBusQueueName)));
+
+            services.AddSingleton<ILiveCoordinationQueueClient>(x => 
+                new LiveCoordinationQueueClient(new QueueClient(serviceBusSettings.ConnectionString, serviceBusSettings.ServiceBusLiveQueueName)));
         }
     }
 }

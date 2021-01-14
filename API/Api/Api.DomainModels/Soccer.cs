@@ -8,10 +8,9 @@ namespace Api.DomainModels
 {
     public class Soccer: Competition
     {
-        public Soccer(string name, string place, ICollection<Team> teams, DateTime startDate) 
-            : base(name, place, teams, startDate, SportType.Soccer)
+        public Soccer(string name, string place, ICollection<Team> teams, DateTime startDate, string uniqueId) 
+            : base(name, place, teams, startDate, SportType.Soccer, uniqueId)
         {
-
             if (teams == null || teams.Count != 2)
             {
                 throw new DomainException("Wrong Teams Count", DomainErrorCode.TEAMS_NUMBER_INCORRECT);

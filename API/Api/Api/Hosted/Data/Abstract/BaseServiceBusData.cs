@@ -15,7 +15,7 @@ namespace Api.Hosted.Data.Abstract
 
         public string ConnectionString => settings.Value.ConnectionString;
 
-        public string? StorageName { get; set; }
+        public string StorageName { get; set; } = default!;
 
         public string SubscriptionName { get; set; } = default!;
     }

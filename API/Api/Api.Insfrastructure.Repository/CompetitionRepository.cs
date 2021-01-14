@@ -24,10 +24,13 @@ namespace Api.Insfrastructure.Repository
             await competitions.InsertOneAsync(dto);
         }
 
-        public async Task UpdateAsync(Competition competition)
+        public async Task UpsertAsync(Competition competition)
         {
             var dto = new CompetitionDto(competition);
-            await competitions.ReplaceOneAsync(book => dto.Id == competition.Id, dto);
+
+            await competitions.ReplaceOneAsync(
+                filter => filter.Id.Equals(competition.UniqueId), dto,
+                new ReplaceOptions { IsUpsert = true });
         }
     }
 }

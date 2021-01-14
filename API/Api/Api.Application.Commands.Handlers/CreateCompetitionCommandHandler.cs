@@ -19,9 +19,12 @@ namespace Api.Application.Commands.Handlers
 
         public async Task<CommandResult> Handle(CreateCompetitionCommand request, CancellationToken cancellationToken)
         {
+            //Each new message is found based on it's uniquenes id, that we calculate out of some fields, that considered to be unique.
+            //Currently, it's always being replaced with it's new version.
             var teams = request.Teams.Select(x => new Team(x.Name)).ToList();
-            var competition = new Soccer(request.Name, request.Place, teams, request.StartDate);
-            await repository.CreateAsync(competition);
+            var competition = new Soccer(request.Name, request.Place, teams, request.StartDate, request.UniqueId.ToString());
+
+            await repository.UpsertAsync(competition);
 
             return new CommandResult
             {

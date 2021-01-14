@@ -9,6 +9,6 @@ namespace Api.DomainModels.Repository
     {
         Task CreateAsync(T c);
 
-        Task UpdateAsync(T c);
+        Task UpsertAsync(T c);
     }
 }

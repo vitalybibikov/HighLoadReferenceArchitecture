@@ -6,12 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <ProjectReference Include="..\Api.Core.Shared\Api.Core.Shared.csproj" />
-    <ProjectReference Include="..\NuGets\NuGets.csproj" />
+    <ProjectReference Include="..\Api\NuGets\NuGets.csproj" />
   </ItemGroup>
+
 </Project>

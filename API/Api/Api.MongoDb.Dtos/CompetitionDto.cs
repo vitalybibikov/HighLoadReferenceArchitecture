@@ -20,7 +20,9 @@ namespace Api.MongoDb.Dtos
                 throw new ArgumentNullException(nameof(competition));
             }
 
-            Id = competition.Id!;
+            //todo: algorithm should be changed to be really unique
+            Id = competition.UniqueId;
+
             Name = competition.Name;
             Place = competition.Place;
             StartDate = competition.StartDate;
@@ -30,7 +32,7 @@ namespace Api.MongoDb.Dtos
         }
 
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.String)]
         public string Id { get; set; }
 
         public string Name { get; set; }
