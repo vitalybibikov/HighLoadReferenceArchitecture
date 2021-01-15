@@ -6,10 +6,6 @@ namespace NuGets.NuGets.Dtos
 {
     public class CompetitionMessage
     {
-        public CompetitionMessage()
-        {
-        }
-
         public string Name { get; set; }
 
         public string Place { get; set; }

@@ -24,13 +24,17 @@ namespace Common.Sources.Implementations.LifeScores.Capabilities
 
         public override async Task<List<Competition>> GetAllAsync()
         {
-            var nodes = await GetNodes(Client.BaseAddress);
-            return nodes.Select(ParseNode).ToList();
+            var node = await GetNodesAsync(Client.BaseAddress);
+
+            return node.SelectNodes("(//div[contains(@data-type,'evt')])")
+                .Select(ParseNode)
+                .ToList();
         }
 
         private Competition ParseNode(HtmlNode node)
         {
-            Competition competition = null;
+            Competition competition;
+
             var time = node.Attributes["data-esd"].Value;
             var dateTime = DateTime.ParseExact(time, "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
             var team1Name = node.SelectSingleNode("div[contains(@class,'ply tright name')]").InnerText.Trim();
@@ -62,9 +66,14 @@ namespace Common.Sources.Implementations.LifeScores.Capabilities
             return competition;
         }
 
-        public override async Task<Competition> GetLiveAsync(string content)
+        public override async Task<CompetitionStats> GetLiveAsync(string content)
         {
-            throw new NotImplementedException();
+            var node = await GetNodesAsync(content);
+
+            var score = node.SelectSingleNode("//div[contains(@class,'sco')]").InnerText.Trim();
+            var stats = new CompetitionStats(score);
+
+            return stats;
         }
     }
 }

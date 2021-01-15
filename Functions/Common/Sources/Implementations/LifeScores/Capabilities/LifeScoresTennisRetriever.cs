@@ -19,7 +19,7 @@ namespace Common.Sources.Implementations.LifeScores.Capabilities
             throw new NotImplementedException();
         }
 
-        public override async Task<Competition> GetLiveAsync(string content)
+        public override async Task<CompetitionStats> GetLiveAsync(string content)
         {
             throw new NotImplementedException();
         }

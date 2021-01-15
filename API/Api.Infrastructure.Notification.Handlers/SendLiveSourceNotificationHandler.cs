@@ -26,6 +26,7 @@ namespace Api.Infrastructure.Notification.Handlers
                 When = notification.When,
                 FinishTime = notification.FinishTime,
                 PollingIntervalInSec = notification.PollingIntervalInSec,
+                CompetitionUniqueId = notification.CompetitionUniqueId,
                 StartTime = notification.StartTime,
                 Uri = notification.Uri
             };

@@ -11,5 +11,7 @@ namespace NuGets.NuGets.Contracts
         public Uri Uri { get; set; }
 
         public int PollingIntervalInSec { get; set; }
+
+        public string CompetitionUniqueId { get; set; }
     }
 }

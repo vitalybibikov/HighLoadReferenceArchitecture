@@ -56,7 +56,28 @@ namespace Api.Hosted.Handler
                                 Teams = message.Teams.Select(x => new CreateTeamCommand { Name = x.Name }),
                                 UniqueId = message.UniqueId,
                                 LiveUri = message.LiveUri
-                            }, 
+                            },
+                            cancellationToken);
+
+                        break;
+                    }
+
+                case nameof(CompetitionStatsMessage):
+                    {
+                        var message = brokeredMessage.GetBody<CompetitionStatsMessage>();
+
+                        logger.LogInformation(
+                            handleMessageTemplate,
+                            brokeredMessage.CorrelationId,
+                            GetType().Name,
+                            message);
+
+                        await mediator.Send(
+                            new CreateCompetitionStatsCommand
+                            {
+                                CompetitionId = message.CompetitionId,
+                                Score = message.Score,
+                            },
                             cancellationToken);
 
                         break;
@@ -64,7 +85,7 @@ namespace Api.Hosted.Handler
 
                 default:
                     {
-                        logger.LogDebug(
+                        logger.LogWarning(
                             $"{GetType().Name} does not handle the {brokeredMessage.ContentType}");
                         break;
                     }

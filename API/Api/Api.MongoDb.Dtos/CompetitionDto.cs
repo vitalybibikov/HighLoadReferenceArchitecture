@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Api.Core.Shared.Enums;
 using Api.DomainModels;
 using MongoDB.Bson;
@@ -26,9 +27,11 @@ namespace Api.MongoDb.Dtos
             Name = competition.Name;
             Place = competition.Place;
             StartDate = competition.StartDate;
-            Teams = new List<Team>();
+            Teams = competition.Teams.Select(x => new Team(x.Name)).ToList();
             SportType = competition.Type;
             CompetitionDate = competition.CompetitionDate;
+            Stats = competition.Stats;
+            LiveUri = competition.LiveUri;
         }
 
         [BsonId]
@@ -44,6 +47,10 @@ namespace Api.MongoDb.Dtos
         public DateTime CompetitionDate { get; set; }
 
         public SportType SportType { get; set; }
+
+        public CompetitionStats Stats { get; set; }
+
+        public Uri LiveUri { get; set; }
 
         public List<Team> Teams { get; set; } = new List<Team>(2);
     }

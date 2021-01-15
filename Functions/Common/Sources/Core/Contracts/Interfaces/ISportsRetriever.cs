@@ -18,6 +18,6 @@ namespace Common.Sources.Core.Contracts.Interfaces
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        Task<Competition> GetLiveAsync(string content);
+        Task<CompetitionStats> GetLiveAsync(string content);
     }
 }

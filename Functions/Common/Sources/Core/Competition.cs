@@ -30,6 +30,8 @@ namespace Common.Sources.Core
 
         public SportType SportType { get; }
 
+        public CompetitionStats CompetitionStats { get; private set; }
+
         public ImmutableArray<Team> Teams { get; }
 
         //for simplicity of a demo will be like so.
@@ -45,6 +47,12 @@ namespace Common.Sources.Core
                        StartDate.ToString(CultureInfo.InvariantCulture).GetStableHashCode() ^
                        SportType.ToString().GetStableHashCode();
             }
+        }
+
+        public void UpdateCompetitionStatistics(CompetitionStats stats)
+        {
+            //adds, changes statistics, etc.
+            CompetitionStats = stats;
         }
     }
 }

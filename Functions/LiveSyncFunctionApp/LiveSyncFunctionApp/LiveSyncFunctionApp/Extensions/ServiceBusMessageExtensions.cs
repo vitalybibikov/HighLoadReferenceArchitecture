@@ -11,6 +11,18 @@ namespace LiveSyncFunctionApp.Extensions
     {
         public static Message ToBrokeredMessage<T>(this T data, string uniqueId)
         {
+            var message = ToBrokeredMessage(data);
+
+            if (!String.IsNullOrEmpty(uniqueId))
+            {
+                message.MessageId = uniqueId;
+            }
+
+            return message;
+        }
+
+        public static Message ToBrokeredMessage<T>(this T data)
+        {
             var ser = new DataContractSerializer(typeof(T));
             using var memoryStream = new MemoryStream();
             var binaryDictionaryWriter = XmlDictionaryWriter.CreateBinaryWriter(memoryStream);
@@ -20,11 +32,6 @@ namespace LiveSyncFunctionApp.Extensions
             {
                 ContentType = data.GetType().Name
             };
-
-            if (!String.IsNullOrEmpty(uniqueId))
-            {
-                message.MessageId = uniqueId;
-            }
 
             return message;
         }

@@ -11,10 +11,10 @@ namespace Api.DomainModels
         public Soccer(string name, string place, ICollection<Team> teams, DateTime startDate, string uniqueId, Uri liveUri) 
             : base(name, place, teams, startDate, SportType.Soccer, uniqueId, liveUri)
         {
-            if (teams == null || teams.Count != 2)
-            {
-                throw new DomainException("Wrong Teams Count", DomainErrorCode.TEAMS_NUMBER_INCORRECT);
-            }
+            //if (teams == null || teams.Count != 2)
+            //{
+            //    throw new DomainException("Wrong Teams Count", DomainErrorCode.TEAMS_NUMBER_INCORRECT);
+            //}
         }
 
         //and other business rules, related to a specified game type should be validated below.

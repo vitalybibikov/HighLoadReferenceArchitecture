@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Sources;
-using Common.Sources.Core;
-using Dynamitey.DynamicObjects;
 using LiveSyncFunctionApp.Extensions;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs;
@@ -14,7 +10,6 @@ using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Logging;
 using NuGets.NuGets.Contracts;
 using NuGets.NuGets.Dtos;
-using NuGets.NuGets.Dtos.Enums;
 
 namespace LiveSyncFunctionApp
 {
@@ -43,7 +38,7 @@ namespace LiveSyncFunctionApp
             //to make the demo work;
             DateTime expiryTime = message.FinishTime; 
 
-            while (context.CurrentUtcDateTime < expiryTime)
+           // while (context.CurrentUtcDateTime <= expiryTime.ToUniversalTime())
             {
                 //todo: if match has ended or was cancelled - skip.
                 var source = factory.GetSource(message.ConnectorType);
@@ -56,38 +51,22 @@ namespace LiveSyncFunctionApp
                         System.Net.Http.HttpMethod.Get,
                         new Uri("https://www.livescores.com/soccer/holland/eredivisie/fc-twente-vs-ajax/247557/")); //message.Uri
 
-                //currently not implemented, thus will fail
-                //var competition = await retriever.GetLiveAsync(response.Content);
+                var stats = await retriever.GetLiveAsync(response.Content);
 
-                var competition = new Competition(
-                    "Test",
-                    "Test",
-                    new List<Team>()
+                var result = new CompetitionStatsMessage
                 {
-                    new Team("Test1"),
-                    new Team("Test2")
-                },
-                    DateTime.Now,
-                    SportType.Soccer,
-                    message.Uri);
-
-
-                var result = new CompetitionMessage
-                {
-                    Name = competition.Name,
-                    Place = competition.Place,
-                    SportType = competition.SportType,
-                    StartDate = competition.StartDate,
-                    Teams = competition.Teams.Select(m => new TeamMessage { Name = m.Name }).ToList(),
-                    UniqueId = competition.UniqueId
+                    CompetitionId = message.CompetitionUniqueId,
+                    Score =  stats.Score
                 };
 
+                if (!String.IsNullOrEmpty(result.CompetitionId))
+                {
+                    await context.CallActivityAsync("LiveDataFunctionResultServiceBus", result);
 
-                await context.CallActivityAsync("LiveDataFunctionResultServiceBus", result);
-
-                // Orchestration sleeps until this time.
-                var nextCheck = context.CurrentUtcDateTime.AddSeconds(pollingInterval);
-                await context.CreateTimer(nextCheck, CancellationToken.None);
+                    // Orchestration sleeps until this time.
+                    var nextCheck = context.CurrentUtcDateTime.AddSeconds(pollingInterval); 
+                    //await context.CreateTimer(nextCheck, CancellationToken.None);
+                }
             }
         }
 
@@ -97,7 +76,7 @@ namespace LiveSyncFunctionApp
             [DurableClient] IDurableOrchestrationClient client,
             ILogger log)
         {
-            //uri is pretty unique, but UniqueId might be used here as well;
+            //todo: UniqueId might be used here if we need some kind of identification, but should include connectorType then.
             if (message.Uri != null)
             {
                 var instanceId = message.Uri.ToBase64OrNull();
@@ -122,9 +101,14 @@ namespace LiveSyncFunctionApp
             IAsyncCollector<Message> output,
             ILogger log)
         {
-            var message = context.GetInput<CompetitionMessage>();
-            var result = message.ToBrokeredMessage(message.UniqueId.ToString());
+
             log.LogInformation($"{nameof(LiveDataFunctionResultServiceBus)} was triggered.");
+
+            var message = context.GetInput<CompetitionStatsMessage>();
+
+            //if required, can be deduped as well with the service bus later on.
+            var result = message.ToBrokeredMessage();
+
             await output.AddAsync(result);
         }
     }

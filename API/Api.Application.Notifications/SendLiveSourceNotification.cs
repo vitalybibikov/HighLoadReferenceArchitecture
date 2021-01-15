@@ -9,6 +9,8 @@ namespace Api.Application.Notifications
     {
         public Uri Uri { get; set; }
 
+        public string CompetitionUniqueId { get; set; }
+
         public DateTime When { get; set; }
 
         public SourceConnectorType ConnectorType { get; set; }

@@ -23,6 +23,7 @@ namespace Api.Hosted
 
         protected override async Task OnMessageAsync(Message message, CancellationToken cancellationToken)
         {
+            //todo: separate handlers
             await handler.Handle(message, cancellationToken);
         }
     }

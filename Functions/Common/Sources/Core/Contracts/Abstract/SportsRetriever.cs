@@ -17,6 +17,6 @@ namespace Common.Sources.Core.Contracts.Abstract
 
         public abstract Task<List<Competition>> GetAllAsync();
 
-        public abstract Task<Competition> GetLiveAsync(string content);
+        public abstract Task<CompetitionStats> GetLiveAsync(string content);
     }
 }

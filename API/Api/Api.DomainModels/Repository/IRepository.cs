@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Api.DomainModels.Repository
 {
@@ -10,5 +7,9 @@ namespace Api.DomainModels.Repository
         Task CreateAsync(T c);
 
         Task UpsertAsync(T c);
+
+        Task<bool> ExistsAsync(T c);
+
+        Task<T> GetAsync(string id);
     }
 }

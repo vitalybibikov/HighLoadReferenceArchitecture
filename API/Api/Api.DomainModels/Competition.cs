@@ -15,6 +15,8 @@ namespace Api.DomainModels
             StartDate = startDate;
             Teams = teams.ToList();
             Type = type;
+
+            //todo: uris will be a set of source with a relation to type.
             LiveUri = liveUri;
         }
 
@@ -34,6 +36,14 @@ namespace Api.DomainModels
 
         public Uri LiveUri { get; set; }
 
+        public CompetitionStats Stats { get; set; }
+
         public abstract void FinishGame(DateTime endDateTime);
+
+        public void AddStats(CompetitionStats stats)
+        {
+            //just replacing them for now.
+            Stats = stats;
+        }
     }
 }
