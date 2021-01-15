@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Application.Queries.Competitions;
 using Api.Application.Queries.Results;
+using Api.Application.Queries.Results.Competitions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -34,9 +35,13 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IEnumerable<GetCompetitionQueryResult>> Get()
         {
-            return new OkObjectResult(DateTime.Now);
+            var results = await mediator.Send(new GetCompetitionsQuery
+            {
+            });
+
+            return results.Competitions;
         }
     }
 }

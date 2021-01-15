@@ -2,30 +2,28 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Api.Application.Queries.Competitions;
-using Api.Application.Queries.Results;
 using Api.Application.Queries.Results.Competitions;
 using Api.Infrastructure.Queries.Handlers.Base;
 using Api.Infrastructure.Settings;
-using Api.MongoDb.Dtos;
 using MediatR;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Api.Infrastructure.Queries.Handlers
 {
-    public class GetCompetitionsByDateQueryHandler: BaseCompetitionsHandler
-        , IRequestHandler<GetCompetitionsByDateQuery, GetCompetitionsByDateQueryResult>
+    public class GetCompetitionsQueryHandler : BaseCompetitionsHandler
+        , IRequestHandler<GetCompetitionsQuery, GetCompetitionsByDateQueryResult>
     {
-        public GetCompetitionsByDateQueryHandler(IMongoClient client, IOptions<CompetitionsStoreDbSettings> settings) 
+        public GetCompetitionsQueryHandler(IMongoClient client, IOptions<CompetitionsStoreDbSettings> settings) 
             : base(client, settings)
         {
         }
 
-        public async Task<GetCompetitionsByDateQueryResult> Handle(GetCompetitionsByDateQuery request,
+        public async Task<GetCompetitionsByDateQueryResult> Handle(GetCompetitionsQuery request,
             CancellationToken cancellationToken)
         {
-            var items =  await Competitions
-                .Find<CompetitionDto>(x => x.CompetitionDate == request.Date)
+            //just demonstrates all from the collection
+            var items = await Competitions.Find(_ => true)
                 .ToListAsync(cancellationToken);
 
             var results = items

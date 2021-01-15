@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Api.Application.Queries.Results
+namespace Api.Application.Queries.Results.Competitions
 {
     public class GetCompetitionsByDateQueryResult
     {
