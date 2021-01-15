@@ -38,7 +38,7 @@ namespace LiveSyncFunctionApp
             //to make the demo work;
             DateTime expiryTime = message.FinishTime; 
 
-           // while (context.CurrentUtcDateTime <= expiryTime.ToUniversalTime())
+           while (context.CurrentUtcDateTime >= expiryTime.ToUniversalTime())
             {
                 //todo: if match has ended or was cancelled - skip.
                 var source = factory.GetSource(message.ConnectorType);
@@ -65,7 +65,7 @@ namespace LiveSyncFunctionApp
 
                     // Orchestration sleeps until this time.
                     var nextCheck = context.CurrentUtcDateTime.AddSeconds(pollingInterval); 
-                    //await context.CreateTimer(nextCheck, CancellationToken.None);
+                    await context.CreateTimer(nextCheck, CancellationToken.None);
                 }
             }
         }
