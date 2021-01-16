@@ -14,7 +14,8 @@ variables:
   dockerRegistryServiceConnection: '56e61e86-e72d-49b8-bbb2-88030d678c5d'
   imageRepository: '365scorestest'
   containerRegistry: '365scorestest.azurecr.io'
-  dockerfilePath: '**/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/API/Api/Api/Dockerfile'
+  buildContextPath: '$(Build.SourcesDirectory)/API/Api'
   tag: '$(Build.BuildId)'
   imagePullSecret: '365scorestest3975e59d-auth'
 
@@ -37,6 +38,7 @@ stages:
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
+        buildContext: $(buildContextPath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
