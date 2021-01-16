@@ -15,7 +15,7 @@ variables:
   containerRegistry: '365scorestest.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/API/Api/Api/Dockerfile'
   buildContextPath: '$(Build.SourcesDirectory)/API/Api'
-  tag: '$(Build.BuildId)'
+  tag: 'latest'
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
