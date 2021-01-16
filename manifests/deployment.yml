@@ -1,7 +1,7 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: "365scorestest"
+  name: "scorestestapp"
 spec:
   replicas: 2
   strategy:
@@ -11,15 +11,15 @@ spec:
       maxUnavailable: 50%
   selector:
     matchLabels:
-      app: "365scorestest"
+      app: "scorestestapp"
   template:
     metadata:
       labels:
         app: "365scorestes"
     spec:
       containers:
-        - name: "365scorestest"
-          image: "365scorestest.azurecr.io/365scorestest"
+        - name: "scorestestapp"
+          image: "scorestestapp.azurecr.io/scorestestapp"
           imagePullPolicy: "IfNotPresent"
           resources:
             requests:
@@ -55,13 +55,13 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: 365scorestest
+  name: scorestestapp
 spec:
   maxReplicas: 5 # define max replica count
   minReplicas: 1  # define min replica count
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: 365scorestest
+    name: scorestestapp
   targetCPUUtilizationPercentage: 66 # target CPU utilization
 ---
