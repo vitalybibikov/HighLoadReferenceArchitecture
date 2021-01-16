@@ -20,6 +20,7 @@ using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 
 namespace Api
@@ -39,6 +40,9 @@ namespace Api
             services.AddControllers()
                 .AddFluentValidation(v => v.RegisterValidatorsFromAssemblyContaining<Startup>())
                 .AddControllersAsServices();
+
+            var swaggerInfo = new OpenApiInfo { Title = "365scorestest", Version = "v1" };
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", swaggerInfo); });
 
             services.Configure<ServiceBusSettings>(Configuration.GetSection(nameof(ServiceBusSettings)))
                 .AddOptions<ServiceBusSettings>()
@@ -68,6 +72,9 @@ namespace Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.Use365ExceptionHandler();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Chargify API V1"); });
 
             app.UseRouting();
             app.UseCors("AllowAllOrigins");
