@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "365scorestest-0f70"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "365scorestest-0f70"
+  template:
+    metadata:
+      labels:
+        app: "365scorestest-0f70"
+    spec:
+      containers:
+        - name: "365scorestest-0f70"
+          image: "365scorestest.azurecr.io/365scorestest"
+          ports:
+          - containerPort: 80
