@@ -4,11 +4,11 @@ metadata:
   name: "365scorestest"
 spec:
   replicas: 2
-    strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxSurge: 1
-        maxUnavailable: 50%
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 50%
   selector:
     matchLabels:
       app: "365scorestest"
