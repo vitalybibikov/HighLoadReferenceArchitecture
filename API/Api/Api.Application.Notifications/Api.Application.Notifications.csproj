@@ -8,8 +8,12 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Api.Application.Notifications\Api.Application.Notifications.csproj" />
-    <ProjectReference Include="..\Api\Api.Infrastructure.Settings\Api.Infrastructure.Settings.csproj" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+      <ProjectReference Include="..\NuGets\NuGets.csproj" />
   </ItemGroup>
 
 </Project>

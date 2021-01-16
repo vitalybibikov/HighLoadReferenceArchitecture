@@ -38,7 +38,7 @@ namespace Api.Hosted
                     {
                         ConnectorType = source.ConnectorType,
                         SourceType = source.SourceType,
-                        When = DateTime.Now.AddDays(-52),
+                        When = DateTime.Now.AddDays(-55),
                         SportType = SportType.Soccer
                     }, 
                     cancellationToken);

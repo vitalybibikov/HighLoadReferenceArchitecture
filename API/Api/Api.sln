@@ -37,9 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGets", "NuGets", "{1EBE19
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NuGets", "NuGets\NuGets.csproj", "{7644E38B-7AAE-4CFF-8B17-59BD522CB0EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Application.Notifications", "..\Api.Application.Notifications\Api.Application.Notifications.csproj", "{470797EB-E30C-4549-BF99-29BE2BF8E677}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Application.Notifications", "Api.Application.Notifications\Api.Application.Notifications.csproj", "{470797EB-E30C-4549-BF99-29BE2BF8E677}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Infrastructure.Notification.Handlers", "..\Api.Infrastructure.Notification.Handlers\Api.Infrastructure.Notification.Handlers.csproj", "{9FD31655-9B1D-477A-AD83-8F4D1BBC16B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Infrastructure.Notification.Handlers", "Api.Infrastructure.Notification.Handlers\Api.Infrastructure.Notification.Handlers.csproj", "{9FD31655-9B1D-477A-AD83-8F4D1BBC16B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
