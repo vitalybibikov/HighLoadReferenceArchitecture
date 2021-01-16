@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: "scorestestapp"
-          image: "scorestestapp.azurecr.io/scorestestapp"
+          image: "scorestestapp.azurecr.io/365scorestest"
           imagePullPolicy: "IfNotPresent"
           resources:
             requests:
