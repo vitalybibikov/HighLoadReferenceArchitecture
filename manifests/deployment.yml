@@ -1,19 +1,67 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: "365scorestest-0f70"
+  name: "365scorestest"
 spec:
   replicas: 2
+    strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 50%
   selector:
     matchLabels:
-      app: "365scorestest-0f70"
+      app: "365scorestest"
   template:
     metadata:
       labels:
-        app: "365scorestest-0f70"
+        app: "365scorestes"
     spec:
       containers:
-        - name: "365scorestest-0f70"
+        - name: "365scorestest"
           image: "365scorestest.azurecr.io/365scorestest"
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 30m
+              memory: 256Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi        
           ports:
           - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /hc
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 7
+            periodSeconds: 10
+            failureThreshold: 5
+            successThreshold: 1
+          env:
+            - name: "ASPNETCORE_ENVIRONMENT"
+              value: "dev"            
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: 365scorestest
+spec:
+  maxReplicas: 5 # define max replica count
+  minReplicas: 1  # define min replica count
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: 365scorestest
+  targetCPUUtilizationPercentage: 66 # target CPU utilization
+---

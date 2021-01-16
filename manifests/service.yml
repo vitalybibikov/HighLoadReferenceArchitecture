@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: "365scorestest-0f70"
+    name: "365scorestest"
     labels:
-        app: "365scorestest-0f70"
+        app: "365scorestest"
 spec:
     type: LoadBalancer
     ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
     selector:
-        app: "365scorestest-0f70"
+        app: "365scorestest"
