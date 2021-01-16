@@ -65,7 +65,7 @@ namespace Api.Configuration.Extensions
 
         public static IHealthChecksBuilder AddLiveCompetitionsTopic(this IHealthChecksBuilder hcBuilder, ServiceBusSettings serviceBusSettings)
         {
-            hcBuilder.AddAzureServiceBusQueue(
+            hcBuilder.AddAzureServiceBusTopic(
                 serviceBusSettings.ConnectionString,
                 serviceBusSettings.ServiceBusLiveCompetitionsTopicName,
                 serviceBusSettings.ServiceBusLiveCompetitionsTopicName,
