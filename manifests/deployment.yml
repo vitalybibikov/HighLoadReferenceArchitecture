@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        app: "365scorestes"
+        app: "scorestestapp"
     spec:
       containers:
         - name: "scorestestapp"
