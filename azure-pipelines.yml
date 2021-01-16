@@ -14,6 +14,7 @@ variables:
   imageRepository: '365scorestest'
   containerRegistry: '365scorestest.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/API/Api/Api/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/API/Api'
   tag: '$(Build.BuildId)'
   
   # Agent VM image name
@@ -34,6 +35,7 @@ stages:
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
+        buildContext: $(buildContext)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
