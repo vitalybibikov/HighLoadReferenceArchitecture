@@ -35,9 +35,17 @@ namespace LiveSyncFunctionApp
             var message = context.GetInput<LiveSyncMessage>();
             int pollingInterval = message.PollingIntervalInSec;
 
-            DateTime expiryTime = message.FinishTime; 
+            DateTime expiryTime = message.FinishTime;
 
-           while (context.CurrentUtcDateTime < expiryTime.ToUniversalTime())
+            if (message.StartTime >= context.CurrentUtcDateTime.AddMinutes(1))
+            {
+                //Orchestration was scheduled, and waits till the start of a match, without billing.
+                var sleepUntil = message.StartTime - context.CurrentUtcDateTime;
+                var nextCheck = context.CurrentUtcDateTime.AddSeconds(sleepUntil.TotalSeconds);
+                await context.CreateTimer(nextCheck, CancellationToken.None);
+            }
+
+            while (DateTime.UtcNow < expiryTime)
             {
                 //todo: if match has ended or was cancelled - skip.
                 var source = factory.GetSource(message.ConnectorType);
@@ -45,17 +53,14 @@ namespace LiveSyncFunctionApp
 
                 //todo: currently only all is supported for the demo
                 //todo: can support almost unlimited amount of calls to source apis, that can be aggregated in this point.
-                DurableHttpResponse response =
-                    await context.CallHttpAsync(
-                        System.Net.Http.HttpMethod.Get,
-                        new Uri("https://www.livescores.com/soccer/holland/eredivisie/fc-twente-vs-ajax/247557/")); //message.Uri
+                DurableHttpResponse response = await context.CallHttpAsync(System.Net.Http.HttpMethod.Get, message.Uri);
 
                 var stats = await retriever.GetLiveAsync(response.Content);
 
                 var result = new CompetitionStatsMessage
                 {
                     CompetitionId = message.CompetitionUniqueId,
-                    Score =  stats.Score
+                    Score = stats.Score
                 };
 
                 if (!String.IsNullOrEmpty(result.CompetitionId))
@@ -63,7 +68,7 @@ namespace LiveSyncFunctionApp
                     await context.CallActivityAsync("LiveDataFunctionResultServiceBus", result);
 
                     // Orchestration sleeps until this time.
-                    var nextCheck = context.CurrentUtcDateTime.AddSeconds(pollingInterval); 
+                    var nextCheck = context.CurrentUtcDateTime.AddSeconds(pollingInterval);
                     await context.CreateTimer(nextCheck, CancellationToken.None);
                 }
             }

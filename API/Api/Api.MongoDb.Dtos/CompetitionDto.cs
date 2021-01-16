@@ -27,7 +27,7 @@ namespace Api.MongoDb.Dtos
             Name = competition.Name;
             Place = competition.Place;
             StartDate = competition.StartDate;
-            Teams = competition.Teams.Select(x => new Team(x.Name)).ToList();
+            Teams = competition.Teams.Select(x => new TeamDto { Name = x.Name}).ToList();
             SportType = competition.Type;
             CompetitionDate = competition.CompetitionDate;
             Stats = competition.Stats;
@@ -52,6 +52,6 @@ namespace Api.MongoDb.Dtos
 
         public Uri LiveUri { get; set; }
 
-        public List<Team> Teams { get; set; } = new List<Team>(2);
+        public List<TeamDto> Teams { get; set; } = new List<TeamDto>(2);
     }
 }

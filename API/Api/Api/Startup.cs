@@ -74,7 +74,7 @@ namespace Api
             app.Use365ExceptionHandler();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Chargify API V1"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "365ScoresTest API V1"); });
 
             app.UseRouting();
             app.UseCors("AllowAllOrigins");

@@ -53,10 +53,10 @@ namespace Api.Application.Commands.Handlers
                         ConnectorType = SourceConnectorType.LifeScores,
                         SourceType = SourceType.Api,
                         Uri = request.LiveUri,
-                        When = DateTime.Now.AddMinutes(1), //
-                        PollingIntervalInSec = 30,
-                        StartTime = DateTime.Now.AddMinutes(1),
-                        FinishTime = DateTime.Now.AddMinutes(2),
+                        When = request.StartDate,
+                        PollingIntervalInSec = 60,
+                        StartTime = request.StartDate,
+                        FinishTime = request.StartDate.AddMinutes(120), //for POC it should stop after 90 minutes
                         CompetitionUniqueId = competition.UniqueId,
                         SportType = SportType.Soccer
                     },

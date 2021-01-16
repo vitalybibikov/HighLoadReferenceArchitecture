@@ -38,8 +38,8 @@ namespace Api.Hosted
                     {
                         ConnectorType = source.ConnectorType,
                         SourceType = source.SourceType,
-                        When = DateTime.Now.AddDays(-55),
-                        SportType = SportType.Soccer
+                        When = DateTime.UtcNow,
+                        SportType = SportType.Soccer //NormalProcessing
                     }, 
                     cancellationToken);
             }
