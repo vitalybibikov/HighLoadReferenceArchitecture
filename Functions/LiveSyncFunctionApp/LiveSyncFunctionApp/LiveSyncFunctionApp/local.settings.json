@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=storageaccount365sc9476;AccountKey=5udhvGI7sAuk/uvyCpTmXE4IwLymQhFLoP7pxiYcquuoKDsLW+ipp5HmVy4d0qhuctNYmiYmgTARW4qKHrAPMg==;BlobEndpoint=https://storageaccount365sc9476.blob.core.windows.net/;TableEndpoint=https://storageaccount365sc9476.table.core.windows.net/;QueueEndpoint=https://storageaccount365sc9476.queue.core.windows.net/;FileEndpoint=https://storageaccount365sc9476.file.core.windows.net/",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "FUNCTION_ENV": "local",
+    "ServiceBusQueueName": "live-competition-coordination-queue",
+    "ServiceBusLiveCompetitionsQueueName": "live-competitions",
+    "ServiceBusConnectionString": "Endpoint=sb://competition-bus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=g75oBBHdrOYPnFAofddDGoMkmV+so88U5bopSiYo8rQ="
+  }
+}
