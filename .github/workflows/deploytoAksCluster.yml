@@ -1,0 +1,50 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: 365scorestest.azurecr.io
+        username: ${{ secrets.acr_365scorestest_username }}
+        password: ${{ secrets.acr_365scorestest_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/API/Api" -f  "API/Api/Api/Dockerfile" -t 365scorestest.azurecr.io/365scorestest:${{ github.sha }}
+        docker push 365scorestest.azurecr.io/365scorestest:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_365scorestest_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep production | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace production`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: production
+        container-registry-url: 365scorestest.azurecr.io
+        container-registry-username: ${{ secrets.acr_365scorestest_username }}
+        container-registry-password: ${{ secrets.acr_365scorestest_password }}
+        secret-name: 365scorestesdockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: production
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          365scorestest.azurecr.io/365scorestest:${{ github.sha }}
+        imagepullsecrets: |
+          365scorestesdockerauth
